@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "Hash": "ctE3nGjFoVYWVMJ6k3Rar0hej+fIHDy95AzyTbOwsjg=",
+  "Source": "LoveMusic",
+  "BasePath": "_content/LoveMusic",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "LoveMusic\\wwwroot",
+      "Source": "LoveMusic",
+      "ContentRoot": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\",
+      "BasePath": "_content/LoveMusic",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\uploads\\.mp3",
+      "SourceId": "LoveMusic",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\",
+      "BasePath": "_content/LoveMusic",
+      "RelativePath": "uploads/.mp3",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\.mp3"
+    },
+    {
+      "Identity": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\uploads\\image_2024-05-27_11-05-59.png",
+      "SourceId": "LoveMusic",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\",
+      "BasePath": "_content/LoveMusic",
+      "RelativePath": "uploads/image_2024-05-27_11-05-59.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\image_2024-05-27_11-05-59.png"
+    },
+    {
+      "Identity": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\uploads\\Screen Shot 2024-05-07 at 19.44.22.png",
+      "SourceId": "LoveMusic",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\",
+      "BasePath": "_content/LoveMusic",
+      "RelativePath": "uploads/Screen Shot 2024-05-07 at 19.44.22.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\Screen Shot 2024-05-07 at 19.44.22.png"
+    },
+    {
+      "Identity": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\uploads\\z5589879995646_94855d43770e8ef7f1bd12918d36c5ed.jpg",
+      "SourceId": "LoveMusic",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\",
+      "BasePath": "_content/LoveMusic",
+      "RelativePath": "uploads/z5589879995646_94855d43770e8ef7f1bd12918d36c5ed.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\z5589879995646_94855d43770e8ef7f1bd12918d36c5ed.jpg"
+    }
+  ]
+}

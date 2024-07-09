@@ -1,0 +1,1 @@
+export const SERVER_DOMAIN = "https://0385-2405-4802-1ca0-4ea0-e79b-d50e-3c8a-c101.ngrok-free.app";
