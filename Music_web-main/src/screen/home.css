@@ -962,3 +962,29 @@ a {
     font-size: 18px;
     color: #ccc;
 }
+
+/* Button */
+.button_add {
+    background-color: green;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.button_edit {
+    background-color: #ffff00;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #000;
+}
+
+.button_delete {
+    background-color: #ff0000;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}

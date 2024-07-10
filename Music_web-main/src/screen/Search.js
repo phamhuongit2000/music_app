@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import config from "../config";
+import axios from 'axios';
 
 function Search() {
     const dataLocal = localStorage.getItem('user');
@@ -65,11 +66,15 @@ function Search() {
     // Xử lí next bài
     function nextSong() {
         setCurrentIndex(currentIndex + 1)
+        listenSong(songs[currentIndex].id)
+        audio.currentTime = 0;
     }
 
     // Xử lí prev bài
     function prevSong() {
         setCurrentIndex(currentIndex - 1)
+        listenSong(songs[currentIndex].id)
+        audio.currentTime = 0;
     }
     
     // Xử lí khi đang play
@@ -101,6 +106,21 @@ function Search() {
     // Chọn bài hát
     function choeseSong(index) {
         setCurrentIndex(index)
+        listenSong(songs[currentIndex].id)
+        audio.currentTime = 0;
+    }
+
+    function listenSong(songId) {
+        const formData = new FormData();
+        formData.append("SongId", songId);
+        formData.append("UserId", userLocal.userId);
+
+        axios.post(`${config.serverDomain}/Song/ListenSong`, formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => console.log(res))
     }
 
     return (
@@ -198,6 +218,12 @@ function Search() {
                                     <span>Tài khoản</span>
                                 </a>
                             </li>
+                            <li className="nav-bar-item">
+                                <a href="/history" className="title">
+                                    <i><FontAwesomeIcon icon={faHistory} /></i>
+                                    <span>Lịch sử</span>
+                                </a>
+                            </li>
                         </div>
                     </div>
 
@@ -218,16 +244,14 @@ function Search() {
                     <div className="log-out">
                         <div className="nav-bar nar-bar-user">
                             <li className="nav-bar-item">
-                                <Link to="/" className="title">
-                                    <i><FontAwesomeIcon icon={faRightFromBracket}></FontAwesomeIcon></i>
-                                    <span>Đăng xuất</span>
-                                </Link>
-                            </li>
-                            <li className="nav-bar-item">
-                                <a href="/history" className="title">
-                                    <i><FontAwesomeIcon icon={faHistory} /></i>
-                                    <span>Lịch sử</span>
-                                </a>
+                            <Link to="/" className="title">
+                                <i>
+                                <FontAwesomeIcon
+                                    icon={faRightFromBracket}
+                                ></FontAwesomeIcon>
+                                </i>
+                                <span>Đăng xuất</span>
+                            </Link>
                             </li>
                         </div>
                     </div>

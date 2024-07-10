@@ -9,6 +9,8 @@ using LoveMusic.Service;
 using LoveMusic.Dto.Song;
 using LoveMusic.Dto.User;
 using System.Reflection;
+using LoveMusic.Dto.History;
+using LoveMusic.Dto.Album;
 
 namespace LoveMusic.Controllers
 {
@@ -79,6 +81,28 @@ namespace LoveMusic.Controllers
             {
                 return NotFound();
             }
+            return Ok(song);
+        }
+
+        [HttpPost("ListenSong")]
+        public IActionResult ListenSong([FromForm] ListenMusicDto listenMusicDto)
+        {
+            var song = _musicDbContext.Songs.Where(s => s.SongId == listenMusicDto.SongId).FirstOrDefault();
+            if (song == null)
+            {
+                return NotFound();
+            }
+            song.Views = song.Views + 1;
+
+            var history = new History
+            {
+                SongId = song.SongId,
+                UserId = listenMusicDto.UserId,
+                DateTime = DateTime.Now,
+            };
+
+            _musicDbContext.Historys.Add(history);
+            _musicDbContext.SaveChanges();
             return Ok(song);
         }
 

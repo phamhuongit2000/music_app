@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\music_app\\LoveMusic\\LoveMusic\\LoveMusic.csproj": {}
+    "D:\\music\\music_app\\LoveMusic\\LoveMusic\\LoveMusic.csproj": {}
   },
   "projects": {
-    "D:\\music_app\\LoveMusic\\LoveMusic\\LoveMusic.csproj": {
+    "D:\\music\\music_app\\LoveMusic\\LoveMusic\\LoveMusic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\music_app\\LoveMusic\\LoveMusic\\LoveMusic.csproj",
+        "projectUniqueName": "D:\\music\\music_app\\LoveMusic\\LoveMusic\\LoveMusic.csproj",
         "projectName": "LoveMusic",
-        "projectPath": "D:\\music_app\\LoveMusic\\LoveMusic\\LoveMusic.csproj",
+        "projectPath": "D:\\music\\music_app\\LoveMusic\\LoveMusic\\LoveMusic.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\music_app\\LoveMusic\\LoveMusic\\obj\\",
+        "outputPath": "D:\\music\\music_app\\LoveMusic\\LoveMusic\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

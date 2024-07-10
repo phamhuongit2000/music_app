@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import config from "../config";
+import axios from 'axios';
 
 function AlbumInfo() {
     const dataLocal = localStorage.getItem('user');
@@ -140,6 +141,19 @@ function AlbumInfo() {
     // Chọn bài hát
     function choeseSong(index) {
         setCurrentIndex(index)
+    }
+
+    function listenSong(songId) {
+        const formData = new FormData();
+        formData.append("SongId", songId);
+        formData.append("UserId", userLocal.userId);
+
+        axios.post(`${config.serverDomain}/Song/ListenSong`, formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => console.log(res))
     }
 
     // Handle logout

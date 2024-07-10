@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import config from "../config";
+import axios from 'axios';
 
 function HomeUser() {
     const dataLocal = localStorage.getItem('user');
@@ -94,13 +95,17 @@ function HomeUser() {
     // Xử lí next bài
     function nextSong() {
         setCurrentIndex(currentIndex + 1)
-        console.log(songs[currentIndex + 1].name)
+        console.log(currentIndex)
+        console.log(songs[currentIndex])
+        listenSong(songs[currentIndex].id)
+        audio.currentTime = 0;
     }
 
     // Xử lí prev bài
     function prevSong() {
         setCurrentIndex(currentIndex - 1)
-        console.log(songs[currentIndex + 1].name)
+        listenSong(songs[currentIndex].id)
+        audio.currentTime = 0;
     }
     
     // Xử lí khi đang play
@@ -132,7 +137,21 @@ function HomeUser() {
     // Chọn bài hát
     function choeseSong(index) {
         setCurrentIndex(index);
+        listenSong(songs[currentIndex].id)
         audio.currentTime = 0;
+    }
+
+    function listenSong(songId) {
+        const formData = new FormData();
+        formData.append("SongId", songId);
+        formData.append("UserId", userLocal.userId);
+
+        axios.post(`${config.serverDomain}/Song/ListenSong`, formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => console.log(res))
     }
 
     // Handle logout
@@ -298,14 +317,14 @@ function HomeUser() {
                                 <div className="btn btn-repeat">
                                     <i><FontAwesomeIcon icon={faRedo}></FontAwesomeIcon></i>
                                 </div>
-                                <div className="btn btn-prev" onClick={() => prevSong()}>
+                                <div className="btn btn-prev" onClick={() => { prevSong(); }}>
                                     <i><FontAwesomeIcon icon={faStepBackward}></FontAwesomeIcon></i>
                                 </div>
-                                <div className="btn btn-toggle-play" onClick={() => playSong()}>
+                                <div className="btn btn-toggle-play" onClick={() => { playSong(); }}>
                                     <i className="icon-pause"><FontAwesomeIcon icon={faPause}></FontAwesomeIcon></i>
                                     <i className="icon-play"><FontAwesomeIcon icon={faPlay}></FontAwesomeIcon></i>
                                 </div>
-                                <div className="btn btn-next" onClick={() => nextSong()}>
+                                <div className="btn btn-next" onClick={() => { nextSong(); }}>
                                     <i><FontAwesomeIcon icon={faStepForward}></FontAwesomeIcon></i>
                                 </div>
                                 <div className="btn btn-random">
@@ -351,7 +370,7 @@ function HomeUser() {
                                 <div className="title">
                                     Albums
                                 </div>
-                                <a href="/songs">
+                                <a href="/albums">
                                     Xem tất cả
                                     <i><FontAwesomeIcon icon={faAnglesRight}></FontAwesomeIcon></i>
                                 </a>
@@ -401,7 +420,7 @@ function HomeUser() {
                                                         // else {
                                                         //     choeseSong(index)
                                                         // }
-                                                        choeseSong(index)
+                                                        choeseSong(index);
                                                     }}>
                                                     <div className="cd-thumb"
                                                         style={{backgroundImage: `url(${song?.imgUrl || ""})`}}>

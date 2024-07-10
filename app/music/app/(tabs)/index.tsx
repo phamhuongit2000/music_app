@@ -5,7 +5,9 @@ import AudioPlayer from '@/components/AudioPlayer';
 import { SERVER_DOMAIN } from '../../config';
 
 const App: React.FC = () => {
-  const [musicData, setMusicData] = useState<MusicItem[]>([]); 
+  const [musicData, setMusicData] = useState<MusicItem[]>([]);
+  const [albumsData, setAlbumsData] = useState<AlbumItem[]>([]);
+  const [singersData, setSingerData] = useState<SingerItem[]>([]);
 
   useEffect(() => {
     const fetchMusicData = async () => {
@@ -18,7 +20,33 @@ const App: React.FC = () => {
       }
     };
 
+    const fetchAlbumsData = async () => {
+      try {
+        const response = await fetch(`${SERVER_DOMAIN}/api/Album/GetAll`);
+        const json = await response.json();
+        setAlbumsData(json);
+        console.log(json);
+        console.log(albumsData);
+      } catch (error) {
+        console.error('Error fetching music data:', error);
+      }
+    };
+
+    const fetchSingersData = async () => {
+      try {
+        const response = await fetch(`${SERVER_DOMAIN}/api/Singer/GetAll`);
+        const json = await response.json();
+        setSingerData(json);
+        console.log(json);
+        console.log(singersData);
+      } catch (error) {
+        console.error('Error fetching music data:', error);
+      }
+    };
+
     fetchMusicData();
+    fetchAlbumsData();
+    fetchSingersData();
   }, []);
 
   return (
@@ -35,8 +63,8 @@ const App: React.FC = () => {
       {/* New Music */}
       <Text style={styles.title}>Bài hát mới</Text>
       <ScrollView horizontal={true} style={styles.horizontalScrollView}>
-        {musicData.map((item) => (
-          <View key={item._id} style={{ marginRight: 10 }}>
+        {musicData.map((item, index) => (
+          <View key={index} style={{ marginRight: 10 }}>
             <AudioPlayer
               url={item.audioUrl}
               img={item.imgUrl}
@@ -53,81 +81,29 @@ const App: React.FC = () => {
       {/* Ablums */}
       <Text style={styles.title}>Ablums</Text>
       <ScrollView horizontal={true} style={styles.horizontalScrollView}>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerAlbumHot/edm.jpg')} 
-            style={styles.albumsImg}
-          />
-          <Text numberOfLines={1} style={styles.albumsTitle}>Đỉnh Cao EDM</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerAlbumHot/nhac-han.jpg')} 
-            style={styles.albumsImg}
-          />
-          <Text numberOfLines={1} style={styles.albumsTitle}>Những Bài Hát Hay Nhất HÀN "XẺNG"</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerAlbumHot/nhac-tre.jpg')} 
-            style={styles.albumsImg}
-          />
-          <Text numberOfLines={1} style={styles.albumsTitle}>Nhạc Trẻ Gây Nghiện</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerAlbumHot/rap-viet.jpg')} 
-            style={styles.albumsImg} 
-          />
-          <Text numberOfLines={1} style={styles.albumsTitle}>Cháy Hết Mình Với Những Bản Rap Hay Nhất Mọi Thời Đại</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerAlbumHot/au-my.jpg')} 
-            style={styles.albumsImg} 
-          />
-          <Text numberOfLines={1} style={styles.albumsTitle}>Đỉnh Cao Nhạc Pop, Nghe Như Không Nghe !!!</Text>
-        </View>
+        {albumsData.map((item, index) => (
+          <View key={index} style={{ marginRight: 20 }}>
+            <Image 
+              source={{ uri: item.imgUrl }}
+              style={styles.albumsImg}
+            />
+            <Text numberOfLines={1} style={styles.albumsTitle}>{item.name}</Text>
+          </View>
+        ))}
       </ScrollView>
 
       {/* Nghệ sỹ */}
-      <Text style={styles.title}>Nghệ sỹ</Text>
+      <Text style={styles.title}>Ca sỹ</Text>
       <ScrollView horizontal={true} style={styles.horizontalScrollView}>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerSinger/son-tung-mtp.jpg')} 
-            style={styles.singersImg}
-          />
-          <Text numberOfLines={1} style={styles.singersTitle}>Đỉnh Cao EDM</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerSinger/ho-quang-hieu.jpg')}  
-            style={styles.singersImg}
-          />
-          <Text numberOfLines={1} style={styles.singersTitle}>Hồ Quang Hiếu</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerSinger/jack-97.jpg')} 
-            style={styles.singersImg}
-          />
-          <Text numberOfLines={1} style={styles.singersTitle}>Jack 97</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerSinger/phan-manh-quynh.jpg')} 
-            style={styles.singersImg} 
-          />
-          <Text numberOfLines={1} style={styles.singersTitle}>Phan Mạnh Quỳnh</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Image 
-            source={require('../../assets/BannerSinger/g5-squad.jpg')} 
-            style={styles.singersImg} 
-          />
-          <Text numberOfLines={1} style={styles.singersTitle}>G5 Squad</Text>
-        </View>
+        {singersData.map((item, index) => (
+          <View key={index} style={{ marginRight: 20 }}>
+            <Image 
+              source={{ uri: item.avatarUrl }} 
+              style={styles.singersImg}
+            />
+            <Text numberOfLines={1} style={styles.singersTitle}>{item.name}</Text>
+          </View>
+        ))}
       </ScrollView>
     </ScrollView>
   );
@@ -201,8 +177,22 @@ interface MusicItem {
   imgUrl: string;
   name: string;
   singerName: string;
-  view: string;
+  views: string;
   likes: string;
+}
+
+interface AlbumItem {
+  _id: string;
+  name: string;
+  description: string;
+  imgUrl: string;
+}
+
+interface SingerItem {
+  _id: string;
+  name: string;
+  description: string;
+  avatarUrl: string;
 }
 
 export default App;

@@ -109,7 +109,7 @@ namespace LoveMusic.Controllers
             return Ok();
         }
 
-        [HttpGet("Update/{id}")]
+        [HttpPost("Update/{id}")]
         public async Task<IActionResult> UpdateAlbum(int id, [FromForm] PostAlbumDto postAlbumDto)
         {
             var existingAlbum = _musicDbContext.Albums.FirstOrDefault(s => s.AlbumId == id);
@@ -139,7 +139,7 @@ namespace LoveMusic.Controllers
             return Ok();
         }
 
-        [HttpDelete("Delete/{id}")]
+        [HttpPost("Delete/{id}")]
         public IActionResult DeleteAlbum(int id)
         {
             var album = _musicDbContext.Albums.FirstOrDefault(s => s.AlbumId == id);
@@ -165,7 +165,7 @@ namespace LoveMusic.Controllers
 
             var songAlbum = new SongAlbum
             {
-                AlbumId = addSongToAlbumDto.albumId,
+                AlbumId = addSongToAlbumDto.AlbumId,
                 SongId = addSongToAlbumDto.SongId
             };
 
@@ -175,10 +175,12 @@ namespace LoveMusic.Controllers
             return Ok();
         }
 
-        [HttpDelete("DeleteSongFromAlbum/{id}")]
-        public IActionResult DeleteSongFromAlbum(int id)
+        [HttpPost("DeleteSongFromAlbum")]
+        public IActionResult DeleteSongFromAlbum([FromForm] AddSongToAlbumDto addSongToAlbumDto)
         {
-            var songAlbums = _musicDbContext.SongAlbums.FirstOrDefault(s => s.SongAlbumId == id);
+            var songAlbums = _musicDbContext.SongAlbums
+                .FirstOrDefault(s => s.SongId == addSongToAlbumDto.SongId && s.AlbumId == addSongToAlbumDto.AlbumId);
+
             if (songAlbums == null)
             {
                 return NotFound();

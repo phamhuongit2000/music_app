@@ -26,7 +26,7 @@ namespace LoveMusic.Dto.Album
     public class AddSongToAlbumDto
     {
         public int? SongId { get; set; }
-        public int? albumId { get; set; }
+        public int? AlbumId { get; set; }
     }
 }
 

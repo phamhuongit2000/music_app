@@ -101,7 +101,7 @@ function AdminSinger() {
     }
 
     function editSingerModal(singer) {
-        setSingerId(singer.id);
+        setEditingSingerId(singer.id);
         setEditSingerName(singer.name);
         setEditSingerDescription(singer.description);
         setEditAvatar(null);
@@ -110,6 +110,13 @@ function AdminSinger() {
         const modal = $(".modal");
         modal.classList.add("active");
     }
+
+    function addSingerModal(singer) {
+      setIsEditing(false);
+
+      const modal = $(".modal");
+      modal.classList.add("active");
+  }
 
     function updateSinger() {
         const formData = new FormData();
@@ -255,15 +262,16 @@ function AdminSinger() {
             {/* List song */}
             <div className="home-song">
               <div className="title-wrap">
-                <div className="title">{`${songs.length} Bài hát`}</div>
+                <div className="title">{`${songs.length} Ca sĩ`}</div>
                 <div
                   className="song-main__add-song"
                   onClick={() => {
-                    const modal = $(".modal");
-                    modal.classList.add("active");
+                    addSingerModal()
                   }}
                 >
-                  Thêm ca sĩ mới
+                  <div class="button_add">
+                    Thêm ca sĩ
+                  </div>
                 </div>
               </div>
 

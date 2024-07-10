@@ -47,7 +47,7 @@ function History() {
     }
 
     useEffect(() => {
-        fetch(`${config.serverDomain}/History/GetHistorysByUserId/${userLocal.userId}`)
+        fetch(`${config.serverDomain}/History/GetHistorysByUserId/${userLocal.userId}?limit=100&offset=0`)
         .then(res => res.json())
         .then(data =>{
             setSongs(data);

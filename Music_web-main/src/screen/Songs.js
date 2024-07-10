@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import config from "../config";
+import axios from 'axios';
 
 function Songs() {
     const dataLocal = localStorage.getItem('user');
@@ -94,11 +95,15 @@ function Songs() {
     // Xử lí next bài
     function nextSong() {
         setCurrentIndex(currentIndex + 1)
+        listenSong(songs[currentIndex].id)
+        audio.currentTime = 0;
     }
 
     // Xử lí prev bài
     function prevSong() {
         setCurrentIndex(currentIndex - 1)
+        listenSong(songs[currentIndex].id)
+        audio.currentTime = 0;
     }
     
     // Xử lí khi đang play
@@ -130,7 +135,21 @@ function Songs() {
     // Chọn bài hát
     function choeseSong(index) {
         setCurrentIndex(index);
+        listenSong(songs[currentIndex].id)
         audio.currentTime = 0;
+    }
+
+    function listenSong(songId) {
+        const formData = new FormData();
+        formData.append("SongId", songId);
+        formData.append("UserId", userLocal.userId);
+
+        axios.post(`${config.serverDomain}/Song/ListenSong`, formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => console.log(res))
     }
 
     // Handle logout

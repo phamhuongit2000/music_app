@@ -41,6 +41,11 @@ function HomeAdmin() {
         console.log(postSong)
     }
 
+    function handleLogout() {
+        localStorage.removeItem('user');
+        navigate("/Home", { replace: true });
+    }
+
     if(songs.length != 0) return (
         <div className="root">
             <div className="container">
@@ -118,7 +123,7 @@ function HomeAdmin() {
                     <div className="log-out">
                         <div className="nav-bar nar-bar-user">
                             <li className="nav-bar-item">
-                                <Link to="/" className="title">
+                                <Link to="/" className="title" onClick={handleLogout}>
                                     <i><FontAwesomeIcon icon={faRightFromBracket}></FontAwesomeIcon></i>
                                     <span>Đăng xuất</span>
                                 </Link>

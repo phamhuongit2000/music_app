@@ -35,5 +35,10 @@ namespace LoveMusic.Dto.Song
         public int? SingerId { get; set; }
     }
 
+    public class ListenMusicDto
+    {
+        public int? SongId { get; set; }
+        public int? UserId { get; set; }
+    }
 }
 

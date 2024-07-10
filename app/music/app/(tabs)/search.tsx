@@ -13,7 +13,7 @@ export default function SearchScreen() {
   const handleSearch = async () => {
     try {
       const encodedSearchText = encodeURIComponent(searchText); 
-      const response = await fetch(`${SERVER_DOMAIN}/api/Song/GetAll`);
+      const response = await fetch(`${SERVER_DOMAIN}/api/Song/Search?songName=${encodedSearchText}&orderby=desc&limit=10&offset=0`);
       const json = await response.json();
       setMusicData(json);
     } catch (error) {
@@ -41,7 +41,7 @@ export default function SearchScreen() {
       </View>
       <ScrollView style={styles.horizontalScrollView}>
         {musicData.map((item, index) => (
-          <View key={item._id} style={[
+          <View key={index} style={[
             styles.musicItemContainer,
             { backgroundColor: index % 2 === 0 ? '#f0f0f0' : '#ffffff' } // Alternating colors
           ]}>
@@ -65,13 +65,13 @@ export default function SearchScreen() {
               />
               <Text style={styles.likeText}>
                 {
-                  parseInt(item.likes) >= 1000 && parseInt(item.likes) < 100000
-                  ? `${(parseInt(item.likes) / 1000).toFixed(1)}N`
-                  : parseInt(item.likes) >= 100000 && parseInt(item.likes) < 1000000000
-                  ? `${(parseInt(item.likes) / 1000000).toFixed(1)}M`
-                  : parseInt(item.likes) >= 1000000000
-                  ? `${(parseInt(item.likes) / 1000000000).toFixed(1)}T`
-                  : item.likes
+                  parseInt(item.views) >= 1000 && parseInt(item.views) < 100000
+                  ? `${(parseInt(item.views) / 1000).toFixed(1)}N`
+                  : parseInt(item.views) >= 100000 && parseInt(item.views) < 1000000000
+                  ? `${(parseInt(item.views) / 1000000).toFixed(1)}M`
+                  : parseInt(item.views) >= 1000000000
+                  ? `${(parseInt(item.views) / 1000000000).toFixed(1)}T`
+                  : item.views
                 }
               </Text>
             </View>
@@ -165,6 +165,6 @@ interface MusicItem {
   imgUrl: string;
   name: string;
   singerName: string;
-  view: string;
+  views: string;
   likes: string;
 }

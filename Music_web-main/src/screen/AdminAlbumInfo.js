@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import config from "../config";
+import axios from 'axios';
 
 function AdminAlbumInfo() {
     const dataLocal = localStorage.getItem('user');
@@ -13,33 +14,16 @@ function AdminAlbumInfo() {
     const $ = document.querySelector.bind(document);
     const $$ = document.querySelectorAll.bind(document);
 
-    const playlist = $('.list-song');
-    const cdThumb = $('.current-song .cd-thumb')
-    const songName = $('.current-song .song-name')
-    const btnNext = $('.current-song .btn-next')
-    const btnPrev = $('.current-song .btn-prev')
-    const btnRepeat = $('.current-song .btn-repeat')
-    const btnRandom = $('.current-song .btn-random')
-    const singgerName = $('.current-song .singger-name')
-    const progress = $('.current-song .progress')
-    const playBtn = $('.btn-toggle-play')
-    const currentSong = $('.current-song')
-    const volume = $('.current-song-volume .volume-icon')
-    const audio = $('#audio')
-    const progressVolume = $('#progress-volume')
-
-    let isRandom = false;
-    let isRepeat = false;
-
     const [songs, setSongs] = useState([]);
-    const [albums, setAlbums] = useState({});
-    const [singers, setSingers] = useState([]);
-    const [top100, setTop100] = useState([]);
+    const [allSongs, setAllSongs] = useState([]);
     const [albumInfo, setAlbumInfo] = useState([]);
 
     const [searchKey, setSearchKey] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isplaying, setIsplaying] = useState(false);
+
+    const [albumName, setAlbumName] = useState("");
+    const [image, setImage] = useState("");
+    const [introduce, setIntroduce] = useState("");
+    const [songAddId, setsongAdd] = useState(null);
 
     function handelSearch() {
         const setJsonData=JSON.stringify(searchKey);
@@ -55,91 +39,84 @@ function AdminAlbumInfo() {
         .then(res => res.json())
         .then(data =>{
             setAlbumInfo(data);
-            setSongs(data.listSongsInfo)
+            setSongs(data.listSongsInfo);
+            setAlbumName(data.name);
+            setIntroduce(data.description);
             console.log(data)
         })
     },[])
 
     useEffect(() => {
-        fetch(`${config.serverDomain}/songs`)
-        .then(res => res.json())
-        .then(data =>{
-            setSongs(data);
-        })
-    },[])
+        fetch(`${config.serverDomain}/Song/GetAll?limit=20&offset=0`)
+          .then((res) => res.json())
+          .then((data) => {
+            setAllSongs(data);
+            console.log(data);
+          });
+      }, []);
 
-    useEffect(() => {
-        fetch(`${config.serverDomain}/albums`)
-        .then(res => res.json())
-        .then(data =>{
-            setAlbums(data);
-        })
-    },[])
+    function editAlbum() {
+        const formData = new FormData();
+        formData.append("Name", albumName);
+        formData.append("Description", introduce);
+        formData.append("ImgFile", image);
 
-    useEffect(() => {
-        fetch(`${config.serverDomain}/singers`)
-        .then(res => res.json())
-        .then(data =>{
-            setSingers(data);
-        })
-    },[])
-
-    useEffect(() => {
-        fetch(`${config.serverDomain}/top100`)
-        .then(res => res.json())
-        .then(data =>{
-            setTop100(data);
-        })
-    },[])
-
-    // Xử lí khi bấm play
-    function playSong() {
-        if(isplaying) {
-            audio.pause();
-        } else {
-            audio.play();
-        }
+        axios.post(`${config.serverDomain}/Album/Update/${albumChooseID}`, formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            })
+            .then(() => window.location.reload());
     }
 
-    // Xử lí next bài
-    function nextSong() {
-        setCurrentIndex(currentIndex + 1)
+    function editAlbumModal() {
+        const modal = $(".modal");
+        modal.classList.add("active");
     }
 
-    // Xử lí prev bài
-    function prevSong() {
-        setCurrentIndex(currentIndex - 1)
-    }
-    
-    // Xử lí khi đang play
-    function audioPlay() {
-        setIsplaying(true);
-        currentSong.classList.add('playing');
+    function addSongToAlbum() {
+        const formData = new FormData();
+        formData.append("SongId", songAddId);
+        formData.append("AlbumId", albumChooseID);
+
+        axios.post(`${config.serverDomain}/Album/AddSongToAlbum`, formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => console.log(res))
+            .then(() => window.location.reload());
     }
 
-    // Xử lí khi tiến độ bài hát thay đổi
-    function onTimeUpdate() {
-        if(audio.duration) {
-           const progressPercent = Math.floor(audio.currentTime / audio.duration * 100);
-           progress.value = progressPercent;
-        }
+    function addSongToAlbumModal() {
+        const modal = $(".model__add-song");
+        modal.classList.add("active");
     }
 
-    // Xử lí khi tua
-    function onChangeCurentTime(e) {
-        const seekTime = Math.floor(e.target.value * audio.duration / 100);
-        audio.currentTime = seekTime;
+    function deleteAlbum(albumId) {
+        const formData = new FormData();
+
+        axios.post(`${config.serverDomain}/Album/Delete/${albumId}`, formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => console.log(res))
+            .then(() => navigate("/adminalbum", { replace: true }));
     }
 
-    // Xử lí khi đang pause
-    function audioPause() {
-        setIsplaying(false);
-        currentSong.classList.remove('playing');
-    }
+    function deleteSongFromAlbum(songId) {
+        const formData = new FormData();
+        formData.append("SongId", songId);
+        formData.append("AlbumId", albumChooseID);
 
-    // Chọn bài hát
-    function choeseSong(index) {
-        setCurrentIndex(index)
+        axios.post(`${config.serverDomain}/Album/DeleteSongFromAlbum`, formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => console.log(res))
+            .then(() => window.location.reload());
     }
 
     // Handle logout
@@ -242,6 +219,44 @@ function AdminAlbumInfo() {
                 {/* Main */}
                 <div className="main">
                     <div className="home-main">
+                        <div className="title-wrap">
+                            <div
+                                className="song-main__add-song"
+                                onClick={() => {
+                                    
+                                }}
+                            >
+                                <div
+                                    class="button_add"
+                                    onClick={() => addSongToAlbumModal()
+                                }>
+                                    Thêm bài hát vào album
+                                </div>
+                            </div>
+                            <div
+                                className="song-main__add-song"
+                            >
+                                <div
+                                    class="button_edit"
+                                    onClick={() => editAlbumModal()
+                                }>
+                                    Sửa album
+                                </div>
+                            </div>
+                            <div
+                                className="song-main__add-song"
+                                onClick={() => {
+                                    
+                                }}
+                            >
+                                <div 
+                                    class="button_delete"
+                                    onClick={() => deleteAlbum(albumChooseID)
+                                }>
+                                    Xóa album
+                                </div>
+                            </div>
+                        </div>
                         <div className="ablum-info-wrap">
                             <div className="album-info-header">
                                 <div className="album-info-image-wrap">
@@ -256,19 +271,9 @@ function AdminAlbumInfo() {
                             <div className="list-song">
                                 {songs.map((song, index) => {
                                     return (
-                                        <div className={`song-info-container ${currentIndex == index ? 'active': ''} w-1`} key={index} data-index = {index}>
+                                        <div className={`song-info-container w-1`} key={index} data-index = {index}>
                                             <div className="current-song-info w-3">
-                                                <div className="cd" onClick={() => {
-                                                        // if(userLocal[0].level != 'vip' && song.vip == 'Vip') {
-                                                        //     alert('Bài này cần mất phí để nghe bấm oke để chuyển sang trang đăng kí thành viên vip')
-                                                        //     navigate("/registerVip", { replace: true });
-                                                        // }
-                                                        // else {
-                                                        //     choeseSong(index)
-                                                        // }
-
-                                                        choeseSong(index)
-                                                    }}>
+                                                <div className="cd">
                                                     <div className="cd-thumb"
                                                         style={{backgroundImage: `url(${song?.imgUrl || ""})`}}>
                                                     </div>
@@ -276,9 +281,6 @@ function AdminAlbumInfo() {
                                                 <div className="song-info">
                                                     <div className="song-name">
                                                         {song.name}
-                                                        {/* <span className={`card ${song.vip == "Vip"?'vip-member':'normal-member'}`}>
-                                                            {`${song.vip == "Vip"? 'Vip': ''}`}
-                                                        </span> */}
                                                     </div>
                                                     <div className="singger-name">
                                                         {song?.singerName || ""}
@@ -290,8 +292,13 @@ function AdminAlbumInfo() {
                                                 {song.description}
                                             </div>
 
-                                            <div className="song-time w-3">
-                                                {`0${Math.floor(Math.random()*2) + 3}:${Math.floor(Math.random()*50) + 10}`}
+                                            <div className="song-admin__control-group">
+                                                <div
+                                                    className="song-admin__delete"
+                                                    onClick={() => deleteSongFromAlbum(song.id)}
+                                                >
+                                                    Xóa
+                                                </div>
                                             </div>
                                         </div>
                                     )
@@ -305,6 +312,87 @@ function AdminAlbumInfo() {
                 {/* Footer */}
                 <div className="footer">
 
+                </div>
+            </div>
+            
+            {/* Modal add song */}
+            <div className="modal">
+                <div className="modal__overlay" onClick={() => {
+                    const modal = $('.modal');
+                    modal.classList.remove('active')
+                }}></div>
+                <div className="modal__body">
+                    <h3 className="add-song-heading">Sửa album ❤️</h3>
+
+                    <div className="form-group">
+                        <label htmlFor="album" className="form-label">Tên Album</label>
+                        <input id="album" name="album" type="text" className="form-control" placeholder="Nhập tên album"
+                            value={albumName}
+                            onChange={(event) => {setAlbumName(event.target.value)}} required
+                        />
+                        <span className="form-message"></span>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="introduce" className="form-label">Thông tin giới thiệu</label>
+                        <input id="introduce" name="introduce" type="text" className="form-control" placeholder="Nhập thông tin giới thiệu"
+                            value={introduce}
+                            onChange={(event) => {setIntroduce(event.target.value)}} required
+                        />
+                        <span className="form-message"></span>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="img" className="form-label">Hình ảnh</label>
+                        <input id="img" name="img" type="file" accept="image/png, image/gif, image/jpeg" className="custom-file-input"
+                            onChange={(event) => setImage(event.target.files[0])}
+                        />
+                        <span className="form-message"></span>
+                    </div>
+
+                    <div className="form-submit" onClick={() => {
+                        editAlbum()
+                    }}>Edit album</div>
+                </div>
+            </div>
+
+            {/* Modal add song to album*/}
+            <div className="modal model__add-song">
+                <div className="modal__overlay" onClick={() => {
+                    const modal = $('.model__add-song');
+                    modal.classList.remove('active')
+                }}></div>
+                <div className="modal__body">
+                    <h3 className="add-song-heading">Thêm bài hát vào album ❤️</h3>
+
+                    <div className="form-group">
+                        <label htmlFor="category" className="form-label">
+                            Ca sĩ
+                        </label>
+                        <select
+                            id="category"
+                            name="category"
+                            className="form-control"
+                            onChange={(event) => {
+                                setsongAdd(event.target.value)
+                        }}
+                        required
+                        >
+                        <option value="">-- Bài hát --</option>
+                        {allSongs.map((song, index) => {
+                            return (
+                            <option key={index} value={song.id}>
+                                {song.name}
+                            </option>
+                            );
+                        })}
+                        </select>
+                        <span className="form-message"></span>
+                    </div>
+
+                    <div className="form-submit" onClick={() => {
+                        addSongToAlbum()
+                    }}>Add song to album</div>
                 </div>
             </div>
         </div> 

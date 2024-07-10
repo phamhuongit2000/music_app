@@ -116,6 +116,12 @@ function AdminSongs() {
     modal.classList.add("active");
   }
 
+  function addSongModal(song) {
+    setIsEditing(false);
+    const modal = $(".modal");
+    modal.classList.add("active");
+  }
+
   function updateSong() {
     const formData = new FormData();
     formData.append("Name", editSongName);
@@ -269,11 +275,12 @@ function AdminSongs() {
                 <div
                   className="song-main__add-song"
                   onClick={() => {
-                    const modal = $(".modal");
-                    modal.classList.add("active");
+                    addSongModal()
                   }}
                 >
-                  Thêm bài hát mới
+                  <div class="button_add">
+                    Thêm bài hát
+                  </div>
                 </div>
               </div>
 

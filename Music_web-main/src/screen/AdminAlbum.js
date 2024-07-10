@@ -163,7 +163,9 @@ function Songs() {
                                     modal.classList.add("active");
                                 }}
                                 >
-                                    Thêm album mới
+                                    <div class="button_add">
+                                        Thêm album
+                                    </div>
                                 </div>
                             </div>
 
