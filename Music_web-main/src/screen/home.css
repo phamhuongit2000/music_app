@@ -3,6 +3,7 @@
     --primary-back-ground: linear-gradient(to bottom left, #CE20C7, #291acc);
     --text-color: #333;
     --padding: 40px;
+    background-color: red;
 }
 
 * {
@@ -543,8 +544,8 @@ a {
 
 /* Main css */
 .main {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("./assets/img/back-ground/back-group-repeat.jpg");
-    background-repeat: repeat;
+    /* background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("./assets/img/back-ground/back-group-repeat.jpg"); */
+    background: linear-gradient(#e66465, #9198e5);
     padding-left: 240px;
     padding-top: 70px;
     padding-bottom: 100px;

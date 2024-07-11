@@ -240,7 +240,7 @@ function Singer() {
                             <li className="nav-bar-item">
                                 <a href="/albums" className="title">
                                     <i><FontAwesomeIcon icon={faCompactDisc}></FontAwesomeIcon></i>
-                                    <span>album</span>
+                                    <span>Album</span>
                                 </a>
                             </li>
                             <li className="nav-bar-item">

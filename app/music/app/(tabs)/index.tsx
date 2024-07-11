@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
 import AudioPlayer from '@/components/AudioPlayer';
-import { SERVER_DOMAIN } from '../../config';
+import { SERVER_DOMAIN, setAlbumId, setSingerId } from '../../config';
 
 const App: React.FC = () => {
   const [musicData, setMusicData] = useState<MusicItem[]>([]);
@@ -49,6 +50,21 @@ const App: React.FC = () => {
     fetchSingersData();
   }, []);
 
+  const router = useRouter(); // Get the router instance
+
+  const handleAlbumPress = (album: AlbumItem) => {
+    setAlbumId(album.id);
+    router.push({
+      pathname: "/album"
+    });
+  };
+
+  const handleSingerPress = (singer: SingerItem) => {
+    setSingerId(singer.id);
+    router.push({
+      pathname: "/singer"
+    });
+  };
   return (
     <ScrollView style={styles.container}>
       <Image
@@ -83,11 +99,13 @@ const App: React.FC = () => {
       <ScrollView horizontal={true} style={styles.horizontalScrollView}>
         {albumsData.map((item, index) => (
           <View key={index} style={{ marginRight: 20 }}>
-            <Image 
-              source={{ uri: item.imgUrl }}
-              style={styles.albumsImg}
-            />
-            <Text numberOfLines={1} style={styles.albumsTitle}>{item.name}</Text>
+            <TouchableOpacity key={index} style={{ marginRight: 20 }} onPress={() => handleAlbumPress(item)}>
+              <Image
+                source={{ uri: item.imgUrl }}
+                style={styles.albumsImg}
+              />
+              <Text numberOfLines={1} style={styles.albumsTitle}>{item.name}</Text>
+            </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
@@ -97,11 +115,13 @@ const App: React.FC = () => {
       <ScrollView horizontal={true} style={styles.horizontalScrollView}>
         {singersData.map((item, index) => (
           <View key={index} style={{ marginRight: 20 }}>
-            <Image 
-              source={{ uri: item.avatarUrl }} 
-              style={styles.singersImg}
-            />
-            <Text numberOfLines={1} style={styles.singersTitle}>{item.name}</Text>
+            <TouchableOpacity key={index} style={{ marginRight: 20 }} onPress={() => handleSingerPress(item)}>
+              <Image 
+                source={{ uri: item.avatarUrl }} 
+                style={styles.singersImg}
+              />
+              <Text numberOfLines={1} style={styles.singersTitle}>{item.name}</Text>
+            </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
@@ -172,7 +192,7 @@ const styles = StyleSheet.create({
 });
 
 interface MusicItem {
-  _id: string;
+  id: string;
   audioUrl: string;
   imgUrl: string;
   name: string;
@@ -182,14 +202,14 @@ interface MusicItem {
 }
 
 interface AlbumItem {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   imgUrl: string;
 }
 
 interface SingerItem {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   avatarUrl: string;
