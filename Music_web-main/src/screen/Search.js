@@ -1,6 +1,6 @@
 import "./home.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory, faClipboardUser, faCompass, faArrowLeft, faArrowRight, faMagnifyingGlass, faUser, faMusic, faAnglesRight, faCompactDisc, faRecordVinyl, faMicrophoneLines, faGripVertical, faClockRotateLeft, faUpload, faRightFromBracket, faRedo, faStepBackward, faPause, faPlay, faStepForward, faRandom, faVolumeXmark, faVolumeLow, faVolumeHigh, faHouseMedicalCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faHistory, faClipboardUser, faCompass, faArrowLeft, faArrowRight, faMagnifyingGlass, faUser, faMusic, faAnglesRight, faCompactDisc, faRecordVinyl, faMicrophoneLines, faGripVertical, faClockRotateLeft, faUpload, faRightFromBracket, faRedo, faStepBackward, faPause, faPlay, faStepForward, faRandom, faVolumeXmark, faVolumeLow, faVolumeHigh, faHouseMedicalCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -195,12 +195,12 @@ function Search() {
                                     <span>Album</span>
                                 </a>
                             </li>
-                            {/* <li className="nav-bar-item">
+                            <li className="nav-bar-item">
                                 <a href="/top100" className="title">
                                     <i><FontAwesomeIcon icon={faStar}></FontAwesomeIcon></i>
                                     <span>Top 100</span>
                                 </a>
-                            </li> */}
+                            </li>
                         </div>
                     </div>
 

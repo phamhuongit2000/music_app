@@ -1,4 +1,4 @@
-export const SERVER_DOMAIN = "https://7a53-42-116-206-118.ngrok-free.app";
+export const SERVER_DOMAIN = "http://lovemusic-dev.eba-b9p9cpex.ap-southeast-1.elasticbeanstalk.com/";
 
 let albumId = null;
 

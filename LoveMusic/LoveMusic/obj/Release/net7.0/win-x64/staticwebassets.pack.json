@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\music\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\uploads\\.mp3",
+      "PackagePath": "staticwebassets\\uploads\\.mp3"
+    },
+    {
+      "Id": "D:\\music\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\uploads\\Screen Shot 2024-05-07 at 19.44.22.png",
+      "PackagePath": "staticwebassets\\uploads\\Screen Shot 2024-05-07 at 19.44.22.png"
+    },
+    {
+      "Id": "D:\\music\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\uploads\\image_2024-05-27_11-05-59.png",
+      "PackagePath": "staticwebassets\\uploads\\image_2024-05-27_11-05-59.png"
+    },
+    {
+      "Id": "D:\\music\\music_app\\LoveMusic\\LoveMusic\\wwwroot\\uploads\\z5589879995646_94855d43770e8ef7f1bd12918d36c5ed.jpg",
+      "PackagePath": "staticwebassets\\uploads\\z5589879995646_94855d43770e8ef7f1bd12918d36c5ed.jpg"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\win-x64\\staticwebassets\\msbuild.LoveMusic.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\win-x64\\staticwebassets\\msbuild.build.LoveMusic.props",
+      "PackagePath": "build\\LoveMusic.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\win-x64\\staticwebassets\\msbuild.buildMultiTargeting.LoveMusic.props",
+      "PackagePath": "buildMultiTargeting\\LoveMusic.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\win-x64\\staticwebassets\\msbuild.buildTransitive.LoveMusic.props",
+      "PackagePath": "buildTransitive\\LoveMusic.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
